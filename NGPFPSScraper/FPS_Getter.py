@@ -35,16 +35,16 @@ if __name__ == "__main__":
         for r in res:
             print(f"Scene: {scene} Resolution: {r}")
             if platform.system() == "Windows":
-                p = subprocess.run(fr".\instant-ngp.exe --snapshot=.\snapshots\NsightComputeData\{scene}.msgpack --width={r[0]} --height={r[1]} >.\FPSRes\{scene}\{r}_org",shell = True)
+                p = subprocess.run(fr".\instant-ngp.exe --snapshot=.\snapshots\NsightComputeData\{scene}.msgpack --width={r[0]} --height={r[1]} >.\FPSRes\{scene}\{r[0]}x{r[1]}_org",shell = True)
             else:
-                p = subprocess.run(fr"./instant-ngp --snapshot=./snapshots/NsightComputeData/{scene}.msgpack --width={r[0]} --height={r[1]} >./FPSRes/{scene}/{r}_org",shell = True)
+                p = subprocess.run(fr"./instant-ngp --snapshot=./snapshots/NsightComputeData/{scene}.msgpack --width={r[0]} --height={r[1]} >./FPSRes/{scene}/{r[0]}x{r[1]}_org",shell = True)
 
     ## Reader
     result = []
     for r in res:
         r_res = []
         for scene in scenes:
-            path = os.path.join("FPSRes",scene,"{}_org".format(r))
+            path = os.path.join("FPSRes",scene,f"{r[0]}x{r[1]}_org")
             r_res.append(read_data(path))
         result.append(r_res)
     final_resul = np.array(result)
